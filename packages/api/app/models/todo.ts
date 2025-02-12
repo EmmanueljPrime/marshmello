@@ -6,48 +6,55 @@ import { v7 } from 'uuid';
 
 import Project from '#models/project';
 import Status from '#models/status';
+import Tag from '#models/tag';
 
 export default class Todo extends BaseModel {
-	static readonly table = 'todos';
+  static readonly table = 'todos';
 
-	@column({ isPrimary: true })
-	declare id: number;
+  @column({ isPrimary: true })
+  declare id: number;
 
-	@column()
-	declare uuid: string;
+  @column()
+  declare uuid: string;
 
-	@column()
-	declare name: string;
+  @column()
+  declare name: string;
 
-	@column()
-	declare description: string | null;
+  @column()
+  declare description: string | null;
 
-	@column()
-	declare completed: boolean;
+  @column()
+  declare completed: boolean;
 
-	@column()
-	declare projectId: number;
+  @column()
+  declare projectId: number;
 
-	@column()
-	declare statusId: number | null;
+  @column()
+  declare statusId: number | null;
 
-	@belongsTo(() => Project)
-	declare project: BelongsTo<typeof Project>;
+  @column()
+  declare tagId: number | null;
 
-	@belongsTo(() => Status)
-	declare status: BelongsTo<typeof Status>;
+  @belongsTo(() => Project)
+  declare project: BelongsTo<typeof Project>;
 
-	@column.dateTime({ autoCreate: true })
-	declare createdAt: DateTime;
+  @belongsTo(() => Status)
+  declare status: BelongsTo<typeof Status>;
 
-	@column.dateTime({ autoCreate: true, autoUpdate: true })
-	declare updatedAt: DateTime;
+  @belongsTo(() => Tag)
+  declare tag: BelongsTo<typeof Tag>;
 
-	constructor() {
-		super();
-		this.uuid = v7();
-		this.completed = false;
-		this.description = null;
-		this.statusId = null;
-	}
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime;
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime;
+
+  constructor() {
+    super();
+    this.uuid = v7();
+    this.completed = false;
+    this.description = null;
+    this.statusId = null;
+    this.tagId = null;
 }
